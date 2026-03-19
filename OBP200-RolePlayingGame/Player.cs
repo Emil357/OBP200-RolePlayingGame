@@ -15,7 +15,7 @@ public class Player {
     
     public List<string> Inventory { get; set; }
 
-    public Player(string name, string typeOfCharacter, int maxHealth, int attackDamage, int defense, int potions, int gold, List<string> inventory) {
+    public Player(string name, string typeOfCharacter, int maxHealth, int attackDamage, int defense, int potions, int gold, List<string> startingInventory) {
         Name = name;
         TypeOfCharacter = typeOfCharacter;
         MaxHealth = maxHealth;
@@ -26,6 +26,6 @@ public class Player {
         Gold = gold;
         Xp = 0;
         Level = 1;
-        Inventory = inventory;
+        Inventory = startingInventory;
     }
 }
