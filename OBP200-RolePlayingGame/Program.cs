@@ -443,56 +443,46 @@ class Program
 
     static void AddPlayerXp(int amount)
     {
-        int xp = ParseInt(Player[7], 0) + Math.Max(0, amount);
-        Player[7] = xp.ToString();
+        _player.Xp += Math.Max(0, amount);
         MaybeLevelUp();
     }
 
     static void AddPlayerGold(int amount)
     {
-        int gold = ParseInt(Player[6], 0) + Math.Max(0, amount);
-        Player[6] = gold.ToString();
+        _player.Gold += Math.Max(0, amount);
     }
 
     static void MaybeLevelUp()
     {
         // Nivåtrösklar
-        int xp = ParseInt(Player[7], 0);
-        int lvl = ParseInt(Player[8], 1);
-        int nextThreshold = lvl == 1 ? 10 : (lvl == 2 ? 25 : (lvl == 3 ? 45 : lvl * 20));
+        int nextThreshold = _player.Level == 1 ? 10 : (_player.Level == 2 ? 25 : (_player.Level == 3 ? 45 : _player.Level * 20));
 
-        if (xp >= nextThreshold)
+        if (_player.Xp >= nextThreshold)
         {
-            Player[8] = (lvl + 1).ToString();
+            _player.Level++;
 
             // Uppgradering baserad på karaktärsklass
-            string spelKaraktär = Player[1] ?? "Warrior";
-            int maxhp = ParseInt(Player[3], 1);
-            int atk = ParseInt(Player[4], 1);
-            int def = ParseInt(Player[5], 0);
 
-            switch (spelKaraktär)
+            switch (_player.TypeOfCharacter)
             {
                 case "Warrior":
-                    maxhp += 6; atk += 2; def += 2;
+                    _player.MaxHealth += 6; _player.AttackDamage += 2; _player.Defense += 2;
                     break;
                 case "Mage":
-                    maxhp += 4; atk += 4; def += 1;
+                    _player.MaxHealth += 4; _player.AttackDamage += 4; _player.Defense += 1;
                     break;
                 case "Rogue":
-                    maxhp += 5; atk += 3; def += 1;
+                    _player.MaxHealth += 5; _player.AttackDamage += 3; _player.Defense += 1;
                     break;
                 default:
-                    maxhp += 4; atk += 3; def += 1;
+                    _player.MaxHealth += 4; _player.AttackDamage += 3; _player.Defense += 1;
                     break;
             }
 
-            Player[3] = maxhp.ToString();
-            Player[4] = atk.ToString();
-            Player[5] = def.ToString();
-            Player[2] = maxhp.ToString(); // full heal vid level up
+            // full heal vid level up
+            _player.CurrentHealth = _player.MaxHealth;
 
-            Console.WriteLine($"Du når nivå {lvl + 1}! Värden ökade och HP återställd.");
+            Console.WriteLine($"Du når nivå {_player.Level}! Värden ökade och HP återställd.");
         }
     }
 
