@@ -417,7 +417,7 @@ class Program
     static bool TryRunAway()
     {
         // Flyktschans baserad på karaktärsklass
-        string spelKaraktär = Player[1] ?? "Warrior";
+        string spelKaraktär = _player.TypeOfCharacter;
         double chance = 0.25;
         if (spelKaraktär == "Rogue") chance = 0.5;
         if (spelKaraktär == "Mage") chance = 0.35;
