@@ -554,10 +554,9 @@ class Program
 
     static void TryBuy(int cost, Action apply, string successMsg)
     {
-        int gold = ParseInt(Player[6], 0);
-        if (gold >= cost)
+        if (_player.Gold >= cost)
         {
-            Player[6] = (gold - cost).ToString();
+            _player.Gold -= cost;
             apply();
             Console.WriteLine(successMsg);
         }
