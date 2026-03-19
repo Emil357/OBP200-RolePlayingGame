@@ -503,8 +503,7 @@ class Program
         {
             var items = new[] { "Iron Dagger", "Oak Staff", "Leather Vest", "Healing Herb" };
             string found = items[Rng.Next(items.Length)];
-            var inv = (Player[10] ?? "").Trim();
-            Player[10] = string.IsNullOrEmpty(inv) ? found : (inv + ";" + found);
+            _player.Inventory.Add(found);
             Console.WriteLine($"Du plockar upp: {found}");
         }
         return true;
