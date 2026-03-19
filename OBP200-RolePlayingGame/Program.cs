@@ -324,7 +324,7 @@ class Program
 
     static int UseClassSpecial(int enemyDef, bool vsBoss)
     {
-        string spelKaraktär = Player[1] ?? "Warrior";
+        string spelKaraktär = _player.TypeOfCharacter;
         int specialDmg = 0;
 
         // Hantering av specialförmågor
@@ -332,20 +332,17 @@ class Program
         {
             // Heavy Strike: hög skada men självskada
             Console.WriteLine("Warrior använder Heavy Strike!");
-            int atk = ParseInt(Player[4], 5);
-            specialDmg = Math.Max(2, atk + 3 - enemyDef);
+            specialDmg = Math.Max(2, _player.AttackDamage + 3 - enemyDef);
             ApplyDamageToPlayer(2); // självskada
         }
         else if (spelKaraktär == "Mage")
         {
             // Fireball: stor skada, kostar guld
-            int gold = ParseInt(Player[6], 0);
-            if (gold >= 3)
+            if (_player.Gold >= 3)
             {
                 Console.WriteLine("Mage kastar Fireball!");
-                Player[6] = (gold - 3).ToString();
-                int atk = ParseInt(Player[4], 5);
-                specialDmg = Math.Max(3, atk + 5 - (enemyDef / 2));
+                _player.Gold -= 3;
+                specialDmg = Math.Max(3, _player.AttackDamage + 5 - (enemyDef / 2));
             }
             else
             {
@@ -359,18 +356,13 @@ class Program
             if (Rng.NextDouble() < 0.5)
             {
                 Console.WriteLine("Rogue utför en lyckad Backstab!");
-                int atk = ParseInt(Player[4], 5);
-                specialDmg = Math.Max(4, atk + 6);
+                specialDmg = Math.Max(4, _player.AttackDamage + 6);
             }
             else
             {
                 Console.WriteLine("Backstab misslyckades!");
                 specialDmg = 1;
             }
-        }
-        else
-        {
-            specialDmg = 0;
         }
 
         // Dämpa skada mot bossen
