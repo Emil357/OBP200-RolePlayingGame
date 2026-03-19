@@ -298,16 +298,15 @@ class Program
         EnemyTemplates.Add(new[] { "slime", "Geléslem", "14", "3", "0", "5", "3" });
     }
 
-    static int CalculatePlayerDamage(int enemyDef)
-    {
-        int atk = ParseInt(Player[4], 5);
-        string spelKaraktär = Player[1] ?? "Warrior";
+    static int CalculatePlayerDamage(int enemyDef) {
+        int atk = _player.AttackDamage;
+        string spelKaraktär = _player.TypeOfCharacter;
 
         // Beräkna grundskada
         int baseDmg = Math.Max(1, atk - (enemyDef / 2));
         int roll = Rng.Next(0, 3); // liten variation
 
-        switch (spelKaraktär.Trim())
+        switch (spelKaraktär)
         {
             case "Warrior":
                 baseDmg += 1; // warrior buff
@@ -317,9 +316,6 @@ class Program
                 break;
             case "Rogue":
                 baseDmg += (Rng.NextDouble() < 0.2) ? 4 : 0; // rogue crit-chans
-                break;
-            default:
-                baseDmg += 0;
                 break;
         }
 
