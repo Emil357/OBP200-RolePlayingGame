@@ -568,24 +568,20 @@ class Program
 
     static void SellMinorGems()
     {
-        var inv = (Player[10] ?? "");
-        if (string.IsNullOrWhiteSpace(inv))
+        if (_player.Inventory.Count == 0)
         {
             Console.WriteLine("Du har inga föremål att sälja.");
             return;
         }
-
-        var items = inv.Split(';').Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
-        int count = items.Count(x => x == "Minor Gem");
+        
+        int count = _player.Inventory.Count(item => item == "Minor Gem");
         if (count == 0)
         {
             Console.WriteLine("Inga 'Minor Gem' i väskan.");
             return;
         }
 
-        items = items.Where(x => x != "Minor Gem").ToList();
-        Player[10] = items.Count == 0 ? "" : string.Join(";", items);
-
+        _player.Inventory.RemoveAll(item => item == "Minor Gem");
         AddPlayerGold(count * 5);
         Console.WriteLine($"Du säljer {count} st Minor Gem för {count * 5} guld.");
     }
