@@ -481,11 +481,9 @@ class Program
         {
             string item = "Minor Gem";
             if (enemyName.Contains("Urdraken")) item = "Dragon Scale";
-
-            var inv = (Player[10] ?? "").Trim();
-            if (string.IsNullOrEmpty(inv)) Player[10] = item;
-            else Player[10] = inv + ";" + item;
-
+            
+            _player.Inventory.Add(item);
+            
             Console.WriteLine($"Föremål hittat: {item} (lagt i din väska)");
         }
     }
