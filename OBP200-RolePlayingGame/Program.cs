@@ -15,7 +15,7 @@ class Program
     static List<string[]> Rooms = new List<string[]>();
 
     // Fiendemallar: [type, name, HP, ATK, DEF, XPReward, GoldReward]
-    static List<string[]> EnemyTemplates = new List<string[]>();
+    static List<Enemy> EnemyTemplates = new List<Enemy>();
 
     // Status för kartan
     static int CurrentRoomIndex = 0;
@@ -260,10 +260,10 @@ class Program
 
     static void InitEnemyTemplates() {
         EnemyTemplates.Clear();
-        EnemyTemplates.Add(new[] { "beast", "Vildsvin", "18", "4", "1", "6", "4" });
-        EnemyTemplates.Add(new[] { "undead", "Skelett", "20", "5", "2", "7", "5" });
-        EnemyTemplates.Add(new[] { "bandit", "Bandit", "16", "6", "1", "8", "6" });
-        EnemyTemplates.Add(new[] { "slime", "Geléslem", "14", "3", "0", "5", "3" });
+        EnemyTemplates.Add(new Enemy("beast", "Vildsvin", 18, 4, 1, 6, 4));
+        EnemyTemplates.Add(new Enemy("undead", "Skelett", 20, 5, 2, 7, 5));
+        EnemyTemplates.Add(new Enemy("bandit", "Bandit", 16, 6, 1, 8, 6));
+        EnemyTemplates.Add(new Enemy("slime", "Geléslem", 14, 3, 0, 5, 3));
     }
 
     static int CalculatePlayerDamage(int enemyDef) {
