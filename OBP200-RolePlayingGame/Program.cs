@@ -66,32 +66,32 @@ class Program
         Console.Write("Val: ");
         var k = (Console.ReadLine() ?? "").Trim();
 
-        string spelKaraktär = "Warrior";
+        string playableCharacter = "Warrior";
         int hp = 0, maxhp = 0, atk = 0, def = 0;
         int potions = 0, gold = 0;
         
         switch (k) {
             case "1": // Warrior: tankig
-                spelKaraktär = "Warrior";
+                playableCharacter = "Warrior";
                 maxhp = 40; hp = 40; atk = 7; def = 5; potions = 2; gold = 15;
                 break;
             case "2": // Mage: hög damage, låg def
-                spelKaraktär = "Mage";
+                playableCharacter = "Mage";
                 maxhp = 28; hp = 28; atk = 10; def = 2; potions = 2; gold = 15;
                 break;
             case "3": // Rogue: krit-chans
-                spelKaraktär = "Rogue";
+                playableCharacter = "Rogue";
                 maxhp = 32; hp = 32; atk = 8; def = 3; potions = 3; gold = 20;
                 break;
             default:
-                spelKaraktär = "Warrior";
+                playableCharacter = "Warrior";
                 maxhp = 40; hp = 40; atk = 7; def = 5; potions = 2; gold = 15;
                 break;
         }
 
         List<string> startingInventory = new List<string> { "Wooden Sword", "Cloth Armor" };
 
-        _player = new Player(name, spelKaraktär, maxhp,  atk, def, potions, gold, startingInventory);
+        _player = new Player(name, playableCharacter, maxhp,  atk, def, potions, gold, startingInventory);
 
         // Initiera karta (linjärt äventyr)
         Rooms.Clear();
@@ -182,22 +182,22 @@ class Program
             if (isBoss) Console.WriteLine("(Du kan inte fly från en boss!)");
             Console.Write("Val: ");
 
-            var cmd = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
+            var keyboardInput = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
 
-            if (cmd == "A") {
+            if (keyboardInput == "A") {
                 int damage = CalculatePlayerDamage(enemy.Defense);
                 enemy.CurrentHealth -= damage;
                 Console.WriteLine($"Du slog {enemy.Name} för {damage} skada.");
             }
-            else if (cmd == "X") {
+            else if (keyboardInput == "X") {
                 int special = UseClassSpecial(enemy.Defense, isBoss);
                 enemy.CurrentHealth -= special;
                 Console.WriteLine($"Special! {enemy.Name} tar {special} skada.");
             }
-            else if (cmd == "P") {
+            else if (keyboardInput == "P") {
                 UsePotion();
             }
-            else if (cmd == "R" && !isBoss) {
+            else if (keyboardInput == "R" && !isBoss) {
                 if (TryRunAway()) {
                     Console.WriteLine("Du flydde!");
                     return true; // fortsätt äventyr
