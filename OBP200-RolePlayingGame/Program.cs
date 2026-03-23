@@ -161,7 +161,7 @@ class Program
             case "shop":
                 return DoShop();
             case "rest":
-                return DoRest();
+                return _player.DoRest();
             default:
                 Console.WriteLine("Du vandrar vidare...");
                 return true;
@@ -505,14 +505,7 @@ class Program
         AddPlayerGold(count * 5);
         Console.WriteLine($"Du säljer {count} st Minor Gem för {count * 5} guld.");
     }
-
-    static bool DoRest() {
-        Console.WriteLine("Du slår läger och vilar.");
-        _player.CurrentHealth = _player.MaxHealth;
-        Console.WriteLine("HP återställt till max.");
-        return true;
-    }
-
+    
     // ======= Status =======
 
     static void ShowStatus() {

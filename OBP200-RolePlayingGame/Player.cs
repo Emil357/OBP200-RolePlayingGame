@@ -1,6 +1,12 @@
 ﻿namespace OBP200_RolePlayingGame;
 
-public class Player : Character{
+public class Player : Character, IDoRest{
+    public bool DoRest() {
+        Console.WriteLine("Du slår läger och vilar.");
+        CurrentHealth = MaxHealth;
+        Console.WriteLine("HP återställt till max.");
+        return true;
+    }
     public string TypeOfCharacter { get; set; }
     public int Potions { get; set; }
     public int Gold { get; set; }
