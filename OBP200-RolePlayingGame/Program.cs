@@ -64,7 +64,6 @@ class Program
         Console.WriteLine("Välj klass: 1) Warrior  2) Mage  3) Rogue");
         Console.Write("Val: ");
         var k = (Console.ReadLine() ?? "").Trim();
-
         
         string playableCharacter;
         int maxHp; int atk; int def; int potions; int gold;
