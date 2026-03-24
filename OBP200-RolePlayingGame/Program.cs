@@ -13,8 +13,7 @@ class Program
     // Rum: [type, label]
     // types: battle, treasure, shop, rest, boss
     static List<string[]> Rooms = new List<string[]>();
-
-    // Fiendemallar: [type, name, HP, ATK, DEF, XPReward, GoldReward]
+    
     static List<Enemy> EnemyTemplates = new List<Enemy>();
 
     // Status för kartan
@@ -66,32 +65,34 @@ class Program
         Console.Write("Val: ");
         var k = (Console.ReadLine() ?? "").Trim();
 
-        string playableCharacter = "Warrior";
-        int hp = 0, maxhp = 0, atk = 0, def = 0;
-        int potions = 0, gold = 0;
+        // string playableCharacter = "Warrior";
+        // int maxHp = 0, atk = 0, def = 0;
+        // int potions = 0, gold = 0;
+        string playableCharacter;
+        int maxHp; int atk; int def; int potions; int gold;
         
         switch (k) {
             case "1": // Warrior: tankig
                 playableCharacter = "Warrior";
-                maxhp = 40; hp = 40; atk = 7; def = 5; potions = 2; gold = 15;
+                maxHp = 40; atk = 7; def = 5; potions = 2; gold = 15;
                 break;
             case "2": // Mage: hög damage, låg def
                 playableCharacter = "Mage";
-                maxhp = 28; hp = 28; atk = 10; def = 2; potions = 2; gold = 15;
+                maxHp = 28; atk = 10; def = 2; potions = 2; gold = 15;
                 break;
             case "3": // Rogue: krit-chans
                 playableCharacter = "Rogue";
-                maxhp = 32; hp = 32; atk = 8; def = 3; potions = 3; gold = 20;
+                maxHp = 32; atk = 8; def = 3; potions = 3; gold = 20;
                 break;
             default:
                 playableCharacter = "Warrior";
-                maxhp = 40; hp = 40; atk = 7; def = 5; potions = 2; gold = 15;
+                maxHp = 40; atk = 7; def = 5; potions = 2; gold = 15;
                 break;
         }
 
         List<string> startingInventory = new List<string> { "Wooden Sword", "Cloth Armor" };
 
-        _player = new Player(name, playableCharacter, maxhp,  atk, def, potions, gold, startingInventory);
+        _player = new Player(name, playableCharacter, maxHp,  atk, def, potions, gold, startingInventory);
 
         // Initiera karta (linjärt äventyr)
         Rooms.Clear();
@@ -260,13 +261,13 @@ class Program
 
     static int CalculatePlayerDamage(int enemyDef) {
         int atk = _player.AttackDamage;
-        string spelKaraktär = _player.TypeOfCharacter;
+        string playableCharacter  = _player.TypeOfCharacter;
 
         // Beräkna grundskada
         int baseDmg = Math.Max(1, atk - (enemyDef / 2));
         int roll = Rng.Next(0, 3); // liten variation
 
-        switch (spelKaraktär) {
+        switch (playableCharacter ) {
             case "Warrior":
                 baseDmg += 1; // warrior buff
                 break;
@@ -282,17 +283,17 @@ class Program
     }
 
     static int UseClassSpecial(int enemyDef, bool vsBoss) {
-        string spelKaraktär = _player.TypeOfCharacter;
+        string playableCharacter  = _player.TypeOfCharacter;
         int specialDmg = 0;
 
         // Hantering av specialförmågor
-        if (spelKaraktär == "Warrior") {
+        if (playableCharacter  == "Warrior") {
             // Heavy Strike: hög skada men självskada
             Console.WriteLine("Warrior använder Heavy Strike!");
             specialDmg = Math.Max(2, _player.AttackDamage + 3 - enemyDef);
             ApplyDamageToPlayer(2); // självskada
         }
-        else if (spelKaraktär == "Mage") {
+        else if (playableCharacter  == "Mage") {
             // Fireball: stor skada, kostar guld
             if (_player.Gold >= 3) {
                 Console.WriteLine("Mage kastar Fireball!");
@@ -304,7 +305,7 @@ class Program
                 specialDmg = 0;
             }
         }
-        else if (spelKaraktär == "Rogue") {
+        else if (playableCharacter  == "Rogue") {
             // Backstab: chans att ignorera försvar, hög risk/hög belöning
             if (Rng.NextDouble() < 0.5) {
                 Console.WriteLine("Rogue utför en lyckad Backstab!");
@@ -362,10 +363,10 @@ class Program
 
     static bool TryRunAway() {
         // Flyktschans baserad på karaktärsklass
-        string spelKaraktär = _player.TypeOfCharacter;
+        string playableCharacter  = _player.TypeOfCharacter;
         double chance = 0.25;
-        if (spelKaraktär == "Rogue") chance = 0.5;
-        if (spelKaraktär == "Mage") chance = 0.35;
+        if (playableCharacter  == "Rogue") chance = 0.5;
+        if (playableCharacter  == "Mage") chance = 0.35;
         return Rng.NextDouble() < chance;
     }
 
