@@ -65,9 +65,7 @@ class Program
         Console.Write("Val: ");
         var k = (Console.ReadLine() ?? "").Trim();
 
-        // string playableCharacter = "Warrior";
-        // int maxHp = 0, atk = 0, def = 0;
-        // int potions = 0, gold = 0;
+        
         string playableCharacter;
         int maxHp; int atk; int def; int potions; int gold;
         
