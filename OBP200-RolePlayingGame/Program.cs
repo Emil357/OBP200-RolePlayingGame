@@ -159,7 +159,8 @@ class Program
             case "shop":
                 return DoShop();
             case "rest":
-                return _player.DoRest();
+                IDoRest restingMethod = _player;
+                return restingMethod.DoRest();
             default:
                 Console.WriteLine("Du vandrar vidare...");
                 return true;
