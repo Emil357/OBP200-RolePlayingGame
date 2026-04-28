@@ -9,9 +9,9 @@ public class Player : Character, IDoRest{
     }
     public string TypeOfCharacter { get; set; }
     public int Potions { get; set; }
-    public int Gold { get; set; }
-    public int Xp { get; set; }
-    public int Level { get; set; }
+    public int Gold { get; private set; }
+    public int Xp { get; private set; }
+    public int Level { get; private set; }
     
     
     public List<string> Inventory { get; set; }
@@ -23,5 +23,16 @@ public class Player : Character, IDoRest{
         Xp = 0;
         Level = 1;
         Inventory = startingInventory;
+    }
+    public void AddGold(int amount)
+    {
+        if (amount > 0) Gold += amount;
+    }
+
+    public void AddXp(int amount) {
+        if (amount > 0)
+        {
+            Xp += amount;
+        }
     }
 }
