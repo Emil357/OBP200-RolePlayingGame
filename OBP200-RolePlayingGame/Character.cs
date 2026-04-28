@@ -14,14 +14,18 @@ public abstract class Character {
         AttackDamage = attackDamage;
         Defense = defense;
     }
-    
-    public void TakeDamage(int damage)
-    {
-        int finalDamage = Math.Max(0, damage);
-        CurrentHealth -= finalDamage;
-        
-        if (CurrentHealth < 0) CurrentHealth = 0;
-        
-        Console.WriteLine($"{Name} tog {finalDamage} skada. HP: {CurrentHealth}/{MaxHealth}");
+
+    public void TakeDamage(int damage) {
+        if (damage < 0)
+        {
+            damage = 0;
+        }
+
+        CurrentHealth -= damage;
+
+        if (CurrentHealth < 0)
+        {
+            CurrentHealth = 0;
+        }
     }
 }
