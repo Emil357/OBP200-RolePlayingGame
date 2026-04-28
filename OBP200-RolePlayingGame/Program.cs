@@ -221,10 +221,10 @@ class Program
             return false; // avsluta äventyr
         }
         
-        AddPlayerXp(enemy.XPReward);
+        AddPlayerXp(enemy.XpReward);
         AddPlayerGold(enemy.GoldReward);
 
-        Console.WriteLine($"Seger! +{enemy.XPReward} XP, +{enemy.GoldReward} guld.");
+        Console.WriteLine($"Seger! +{enemy.XpReward} XP, +{enemy.GoldReward} guld.");
         MaybeDropLoot(enemy.Name);
 
         return true;
@@ -243,7 +243,7 @@ class Program
             int hp = template.MaxHealth + Rng.Next(-1, 3);
             int atk = template.AttackDamage + Rng.Next(0, 2);
             int def = template.Defense + Rng.Next(0, 2);
-            int xp = template.XPReward + Rng.Next(0, 3);
+            int xp = template.XpReward + Rng.Next(0, 3);
             int gold = template.GoldReward + Rng.Next(0, 3);
             return new Enemy(template.Type, template.Name, hp, atk, def, xp, gold);
         }
