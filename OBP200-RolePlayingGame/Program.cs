@@ -185,12 +185,12 @@ class Program
 
             if (keyboardInput == "A") {
                 int damage = CalculatePlayerDamage(enemy.Defense);
-                enemy.CurrentHealth -= damage;
+                enemy.TakeDamage(damage);
                 Console.WriteLine($"Du slog {enemy.Name} för {damage} skada.");
             }
             else if (keyboardInput == "X") {
                 int special = UseClassSpecial(enemy.Defense, isBoss);
-                enemy.CurrentHealth -= special;
+                enemy.TakeDamage(special);
                 Console.WriteLine($"Special! {enemy.Name} tar {special} skada.");
             }
             else if (keyboardInput == "P") {
@@ -336,27 +336,11 @@ class Program
     }
 
     static void ApplyDamageToPlayer(int dmg) {
-        _player.CurrentHealth -= Math.Max(0, dmg);
-        if (_player.CurrentHealth < 0) {
-            _player.CurrentHealth = 0;
-        }
+        _player.TakeDamage(dmg);
     }
 
     static void UsePotion() {
-        if (_player.Potions <= 0) {
-            Console.WriteLine("Du har inga drycker kvar.");
-            return;
-        }
-
-        // Helning av spelaren
-        int heal = 12;
-        int oldHp = _player.CurrentHealth;
-        
-        _player.CurrentHealth = Math.Min(_player.MaxHealth, _player.CurrentHealth + heal);
-
-        _player.Potions--;
-
-        Console.WriteLine($"Du dricker en dryck och återfår {_player.CurrentHealth - oldHp} HP.");
+        _player.UsePotion();
     }
 
     static bool TryRunAway() {
@@ -406,7 +390,7 @@ class Program
             }
 
             // full heal vid level up
-            _player.CurrentHealth = _player.MaxHealth;
+            _player.Heal(_player.MaxHealth);
 
             Console.WriteLine($"Du når nivå {_player.Level}! Värden ökade och HP återställd.");
         }
@@ -455,7 +439,7 @@ class Program
             var val = (Console.ReadLine() ?? "").Trim();
 
             if (val == "1") {
-                TryBuy(10, () => _player.Potions++, "Du köper en dryck.");
+                TryBuy(10, () => _player.AddPotion(), "Du köper en dryck.");
             }
             else if (val == "2") {
                 TryBuy(25, () => _player.AttackDamage += 2, "Du köper ett bättre vapen.");
