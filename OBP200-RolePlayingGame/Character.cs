@@ -15,13 +15,31 @@ public abstract class Character {
         Defense = defense;
     }
     public void TakeDamage(int damage) {
-        if (damage < 0) damage = 0;
+        
+        if (damage < 0)
+        {
+            damage = 0;
+        }
+        
         CurrentHealth -= damage;
-        if (CurrentHealth < 0) CurrentHealth = 0;
+        
+        if (CurrentHealth < 0)
+        {
+            CurrentHealth = 0;
+        }
     }
     public void Heal(int amount) {
-        if (amount < 0) amount = 0;
+        
+        if (amount < 0)
+        {
+            amount = 0;
+        }
+        
         CurrentHealth += amount;
-        if (CurrentHealth > MaxHealth) CurrentHealth = MaxHealth;
+        
+        if (CurrentHealth > MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
     }
 }
